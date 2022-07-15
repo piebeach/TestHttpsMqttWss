@@ -1,0 +1,24 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script type="text/javascript" src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
+<script>
+  const client = mqtt.connect("wss://localhost:7223/mqtt") // you add a ws:// url here
+  client.subscribe("mqtt/demo")
+
+  client.on("message", function (topic, payload) {
+    alert([topic, payload].join(": "))
+    client.end()
+  })
+
+  client.publish("mqtt/demo", "hello world!")
+</script>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
